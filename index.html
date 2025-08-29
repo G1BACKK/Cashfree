@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cashfree Payment Gateway</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .product-section {
+            display: flex;
+            margin-bottom: 30px;
+            align-items: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .product-img {
+            width: 120px;
+            height: 120px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 2.5rem;
+            color: #7f8c8d;
+        }
+        
+        .product-info h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .product-info p {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        
+        .price {
+            font-size: 1.8rem;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .order-form {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        
+        .order-form h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: #3db9b0;
+        }
+        
+        .btn-pay {
+            background: #ff6b6b;
+        }
+        
+        .btn-pay:hover {
+            background: #ff5252;
+        }
+        
+        .payment-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .payment-info h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .payment-info p {
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+        }
+        
+        .response-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .response-section h3 {
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+        
+        .response-data {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .security-note {
+            background: #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #2d3436;
+        }
+        
+        @media (max-width: 768px) {
+            .product-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .product-img {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h1>Cashfree Payment Gateway</h1>
+            <p>Secure and seamless payment processing</p>
+        </header>
+        
+        <div class="content">
+            <div class="product-section">
+                <div class="product-img">
+                    <i class="fas fa-headphones"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Premium Wireless Headphones</h3>
+                    <p>Noise cancellation • 30hr battery • Bluetooth 5.0</p>
+                    <div class="price">₹1.00</div>
+                </div>
+            </div>
+            
+            <div class="order-form">
+                <h2>Payment Details</h2>
+                <form id="payment-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Enter your name" value="Rahul Sharma" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="Enter your email" value="rahul@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="Enter your phone number" value="9876543210" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Shipping Address</label>
+                        <input type="text" id="address" placeholder="Enter your address" value="123 Main Street, Mumbai, India" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount (₹)</label>
+                        <input type="number" id="amount" value="1" readonly>
+                    </div>
+                    <button type="button" class="btn btn-pay" id="pay-btn">
+                        <i class="fas fa-lock"></i> Pay ₹1.00 with Cashfree
+                    </button>
+                </form>
+                
+                <div class="security-note">
+                    <p><strong>Note:</strong> This is a live integration with Cashfree. When you click the Pay button, you will be redirected to Cashfree's secure payment page to complete your transaction.</p>
+                </div>
+                
+                <div class="payment-info">
+                    <h3>Secure Payment</h3>
+                    <p>Your payment details are encrypted and processed securely by Cashfree. We do not store your card information.</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>This is a demo integration with Cashfree Payment Gateway. For testing use card number: 4111 1111 1111 1111</p>
+        </footer>
+    </div>
+
+    <!-- Cashfree SDK -->
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const payButton = document.getElementById('pay-btn');
+            
+            payButton.addEventListener('click', function() {
+                // Generate a random order ID
+                const orderId = 'order_' + Math.floor(Math.random() * 1000000);
+                
+                // Get customer details from form
+                const customerName = document.getElementById('name').value;
+                const customerEmail = document.getElementById('email').value;
+                const customerPhone = document.getElementById('phone').value;
+                
+                // Initialize Cashfree
+                const cashfree = new Cashfree({
+                    mode: "production" // Use production environment
+                });
+                
+                // Create payment session
+                cashfree.checkout({
+                    paymentSession: {
+                        // Your actual app ID
+                        appId: "1057626425ccc1a4156daf5f05d6267501",
+                        orderId: orderId,
+                        orderAmount: 1,
+                        orderCurrency: "INR",
+                        customerName: customerName,
+                        customerEmail: customerEmail,
+                        customerPhone: customerPhone,
+                        // Return URL for after payment
+                        returnUrl: "https://yourwebsite.com/payment/return?order_id={order_id}"
+                    },
+                    // Redirect target
+                    redirectTarget: "_self"
+                });
+            });
+        });
+    </script>
+</body>
+</html>
